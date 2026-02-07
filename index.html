@@ -1,77 +1,96 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Legend of the Ooze</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            user-select: none;
-        }
-        html, body {
-            overflow: hidden;
-            background: #000;
-        }
-        body {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-        }
-        canvas {
-            width: 100vw;
-            height: 100vh;
-            display: block;
-        }
-        .info {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: #00ff41;
-            font-family: 'Courier New', monospace;
-            font-size: 48px;
-            font-weight: bold;
-            text-shadow: 0 0 20px #00ff41, 0 0 40px #00ff41, 0 0 60px #00ff41;
-            pointer-events: none;
-            z-index: 10;
-            letter-spacing: 3px;
-        }
-    </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Toxic Ooze</title>
+
+<style>
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background: #000;
+}
+
+canvas {
+  width: 100vw;
+  height: 100vh;
+  display: block;
+  touch-action: none;
+}
+
+.info {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: monospace;
+  font-size: 24px;
+  letter-spacing: 4px;
+  color: #00ff55;
+  pointer-events: none;
+  mix-blend-mode: difference;
+  text-shadow:
+    0 0 20px #00ff55,
+    0 0 40px #00ff55;
+  animation: pulse 2.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+</style>
 </head>
+
 <body>
-    <canvas></canvas>
-    <div class="info"></div>
-    
-    <script src="https://cdn.jsdelivr.net/npm/webgl-fluid@0.3"></script>
-    <script>
-        WebGLFluid(document.querySelector('canvas'), {
-            IMMEDIATE: true,
-            TRIGGER: 'hover',
-            SIM_RESOLUTION: 128,
-            DYE_RESOLUTION: 1024,
-            DENSITY_DISSIPATION: 0.98, // Slower dissipation - trails last longer
-            VELOCITY_DISSIPATION: 0.99, // Much slower velocity decay - thick fluid
-            PRESSURE: 0.5, // Lower pressure for slower movement
-            PRESSURE_ITERATIONS: 30,
-            CURL: 25, // Less curl for slower, thicker swirls
-            SPLAT_RADIUS: 0.25,
-            SPLAT_FORCE: 4000, // Lower force for slower motion
-            SHADING: true,
-            COLORFUL: true,
-            COLOR_UPDATE_SPEED: 8,
-            PAUSED: false,
-            BACK_COLOR: { r: 0, g: 20, b: 10 }, // Dark greenish background
-            TRANSPARENT: false,
-            BLOOM: true,
-            BLOOM_ITERATIONS: 10,
-            BLOOM_RESOLUTION: 512,
-            BLOOM_INTENSITY: 1.5,
-            BLOOM_THRESHOLD: 0.4,
-            BLOOM_SOFT_KNEE: 0.7,
-            SUNRAYS: false
-        });
-    </script>
+
+<canvas id="c"></canvas>
+<div class="info">Ooze</div>
+
+<script src="https://cdn.jsdelivr.net/npm/webgl-fluid@0.3.0/dist/webgl-fluid.umd.min.js"></script>
+<script>
+setTimeout(() => {
+  const canvas = document.getElementById("c");
+
+  WebGLFluid(canvas, {
+    IMMEDIATE: true,
+    TRIGGER: "click",
+
+    SIM_RESOLUTION: 128,
+    DYE_RESOLUTION: 1024,
+
+    DENSITY_DISSIPATION: 0.975,
+    VELOCITY_DISSIPATION: 0.92,
+    PRESSURE: 0.15,
+    PRESSURE_ITERATIONS: 50,
+    CURL: 0,
+
+    SPLAT_RADIUS: 0.15,
+    SPLAT_FORCE: 8000,
+
+    COLORFUL: false,
+    PAUSED: false,
+    SHADING: true,
+    COLOR_UPDATE_SPEED: 0,
+
+    BACK_COLOR: { r: 0, g: 0, b: 0 },
+    TRANSPARENT: false,
+    COLOR: { r: 0, g: 1, b: 0.2 },
+
+    BLOOM: true,
+    BLOOM_ITERATIONS: 10,
+    BLOOM_RESOLUTION: 512,
+    BLOOM_INTENSITY: 1.2,
+    BLOOM_THRESHOLD: 0.5,
+    BLOOM_SOFT_KNEE: 0.4,
+
+    SUNRAYS: false
+  });
+}, 100);
+</script>
+
 </body>
 </html>
