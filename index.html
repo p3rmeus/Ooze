@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Ooze</title>
+<title>Ooze</title>
 
 <style>
 html, body {
@@ -36,11 +36,25 @@ canvas {
     0 0 20px #00ff55,
     0 0 40px #00ff55;
   animation: pulse 2.5s ease-in-out infinite;
+  padding: 20px;
+  text-align: center;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 @keyframes pulse {
   0%, 100% { opacity: 0.5; }
   50% { opacity: 1; }
+}
+
+@media (max-width: 768px) {
+  .info {
+    font-size: 12px;
+    letter-spacing: 1px;
+    padding: 10px;
+  }
 }
 </style>
 </head>
@@ -94,5 +108,3 @@ setTimeout(() => {
 
 </body>
 </html>
-
-
